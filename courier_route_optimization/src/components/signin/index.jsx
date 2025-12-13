@@ -5,11 +5,12 @@ import MainImage from "../../images/image2.jpg";
 import { CiMail } from "react-icons/ci";
 import { TbLockPassword } from "react-icons/tb";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const SignIn=()=>{
 
-
-
+  
+  const navigate=useNavigate();
     return(
       <GeneralContainer>
         <LeftContainer>
@@ -55,7 +56,7 @@ const SignIn=()=>{
               </GoogleIcon>
               Sign in with Google
             </ContinueWithGoogleButton>
-            <SignUpText>Don't have an account? <SignUpLink>Sign up</SignUpLink></SignUpText>
+            <SignUpText>Don't have an account? <SignUpLink onClick={()=>{navigate("/sign-up")}}>Sign up</SignUpLink></SignUpText>
           </Card>
           <BottomDiv>© 2025 Kuryexx. All rights reserved.</BottomDiv>
         </RightContainer>

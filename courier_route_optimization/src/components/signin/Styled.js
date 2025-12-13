@@ -221,7 +221,10 @@ export const SignUpText=styled.p`
   width:100%;
 `;
 export const SignUpLink=styled.a`
-
+ &:hover{
+    cursor:pointer;
+    text-decoration:underline;
+  }
 `;
 export const BottomDiv=styled.div`
   display:flex;
