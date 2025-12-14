@@ -49,7 +49,7 @@ const SignIn=()=>{
               </MailDiv>
             </InputForm>
 
-            <SignInButton type="submit">Sign In</SignInButton>
+            <SignInButton type="submit" onClick={()=>navigate("/menu")}>Sign In</SignInButton>
 
             <ContinueWithDiv>Or continue with</ContinueWithDiv>
             <ContinueWithGoogleButton type="button"> 
