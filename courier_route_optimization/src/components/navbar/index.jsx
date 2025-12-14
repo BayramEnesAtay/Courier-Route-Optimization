@@ -1,10 +1,10 @@
 import React from "react";
 import { NavbarContainer, CalculateBtn, Profile, ProfileIcon, ProfileName } from "./Styled.js";
-const NavBar = () => {
+const NavBar = ({collapsed}) => {
 
 
   return(
-    <NavbarContainer>
+    <NavbarContainer collapsed={collapsed}>
       <CalculateBtn>Calculate Routes</CalculateBtn>
       <Profile>
         <ProfileIcon>

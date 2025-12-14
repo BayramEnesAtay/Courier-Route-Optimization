@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const NavbarContainer = styled.div`
-  width: calc(100% - 250px);
+  width: ${({ collapsed }) =>
+  collapsed ? "calc(100% - 80px)" : "calc(100% - 250px)"};
+  transition: width 0.3s ease;
   height: 80px;
   background-color:#FFFFFF;
   display:flex;
