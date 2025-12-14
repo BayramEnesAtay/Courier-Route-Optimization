@@ -44,11 +44,6 @@ const SideBar = () => {
           </MenuItem>
 
           <MenuItem>
-            <i className="pi pi-map" />
-            <MenuText collapsed={collapsed}> Real-Time Map</MenuText>
-          </MenuItem>
-
-          <MenuItem>
             <i className="pi pi-chart-bar" />
             <MenuText collapsed={collapsed}> Analytics</MenuText>
           </MenuItem>
