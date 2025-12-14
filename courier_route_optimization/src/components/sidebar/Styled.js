@@ -33,9 +33,11 @@ export const LogoIcon = styled.div`
 
 export const LogoText = styled.span`
   font-size: ${({ collapsed }) => (collapsed ? "0.5rem" : "1.2rem")};
+  transition: font-size 0.2s ease;
   font-weight: 600;
   color: #3f8efc;
   opacity: ${({ collapsed }) => (collapsed ? 0 : 1)};
+  transition: opacity 0.2s ease;
   transition: opacity 0.2s ease;
   white-space: nowrap;
 `;

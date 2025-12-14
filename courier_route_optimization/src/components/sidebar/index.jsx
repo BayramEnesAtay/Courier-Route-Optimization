@@ -3,11 +3,11 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import "primeicons/primeicons.css";
 import { SidebarContainer, LogoSection, LogoIcon, LogoText, MenuSection, MenuItem, SidebarFooter,MenuText } from "./Styled.js";
-import { useState } from "react";
 
-const SideBar = () => {
+
+const SideBar = ({collapsed,setCollapsed}) => {
   
-  const [collapsed, setCollapsed] = useState(false);
+ 
 
 
   return (
@@ -16,7 +16,7 @@ const SideBar = () => {
       modal={false}
       dismissable={false}
       showCloseIcon={false}
-      style={{ width:collapsed? "80px":"250px" }}
+      style={{ width:collapsed? "80px":"250px" ,transition:"width 0.3s ease"}}
     >
       <SidebarContainer>
         <LogoSection>
@@ -41,11 +41,6 @@ const SideBar = () => {
           <MenuItem>
             <i className="pi pi-map-marker" />
             <MenuText collapsed={collapsed}> Delivery Points</MenuText>
-          </MenuItem>
-
-          <MenuItem>
-            <i className="pi pi-map" />
-            <MenuText collapsed={collapsed}> Real-Time Map</MenuText>
           </MenuItem>
 
           <MenuItem>
