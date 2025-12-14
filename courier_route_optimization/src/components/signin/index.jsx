@@ -1,5 +1,5 @@
 import React from "react";
-import { GeneralContainer, LeftContainer, RightContainer,Logo ,LogoDiv,Name,Motto,Img,StaticsNumber,ContinueWithDiv,StaticsText,Staticsp,SignInButton,Statics,MailIcon,Title,ProjectName,Card,Text1,Text2,MailDiv,MailInput,MailLabel,ContinueWithGoogleButton, GoogleIcon, SignUpText, SignUpLink, BottomDiv} from "./Styled.js";
+import { GeneralContainer, LeftContainer, RightContainer,Logo ,LogoDiv,Name,Motto,Img,StaticsNumber,ContinueWithDiv,StaticsText,Staticsp,SignInButton,Statics,MailIcon,Title,ProjectName,Card,Text1,Text2,MailDiv,MailInput,MailLabel,ContinueWithGoogleButton, GoogleIcon, SignUpText, SignUpLink, BottomDiv, InputForm} from "./Styled.js";
 import LogoImage from "../../images/compass.png";
 import MainImage from "../../images/image2.jpg";
 import { CiMail } from "react-icons/ci";
@@ -30,27 +30,29 @@ const SignIn=()=>{
         </LeftContainer>
         <RightContainer>
           <Card>
-            <Text1>Welcome Back!</Text1>
-            <Text2>Sign to your Kuryexx account</Text2>
-            <MailDiv>
-              <MailLabel>Email Address</MailLabel>
-              <MailIcon>
-                <CiMail/>
-              </MailIcon>
-              <MailInput type="email" placeholder="name@company.com"/>
-            </MailDiv>
-             <MailDiv>
-              <MailLabel>Password</MailLabel>
-              <MailIcon>
-                <TbLockPassword />
-              </MailIcon>
-              <MailInput type="password" placeholder="Enter your Password"/>
-            </MailDiv>
+            <InputForm>
+              <Text1>Welcome Back!</Text1>
+              <Text2>Sign to your Kuryexx account</Text2>
+              <MailDiv>
+                <MailLabel>Email Address</MailLabel>
+                <MailIcon>
+                  <CiMail/>
+                </MailIcon>
+                <MailInput type="email" placeholder="name@company.com"/>
+              </MailDiv>
+              <MailDiv>
+                <MailLabel>Password</MailLabel>
+                <MailIcon>
+                  <TbLockPassword />
+                </MailIcon>
+                <MailInput type="password" placeholder="Enter your Password"/>
+              </MailDiv>
+            </InputForm>
 
-            <SignInButton>Sign In</SignInButton>
+            <SignInButton type="submit">Sign In</SignInButton>
 
             <ContinueWithDiv>Or continue with</ContinueWithDiv>
-            <ContinueWithGoogleButton> 
+            <ContinueWithGoogleButton type="button"> 
               <GoogleIcon>
               <FcGoogle size="30px"/>
               </GoogleIcon>

@@ -5,25 +5,22 @@ import BackgroundImage from "../../images/backimage.jpg";
 export const GeneralContainer = styled.div`
   display: flex;
   flex-direction: row;
-  min-height:100vh;
+  align-items: stretch;
 `
 
 export const LeftContainer = styled.div`
   flex:1;
   display: flex;
   flex-direction: column;
-  height:100%;
   padding-left:5%;
   padding-top:7%;
   padding-bottom:7%;
   padding-right:5%;
   background-image:url(${BackgroundImage});
   row-gap:15px;
-  min-height:100vh;
   background-size: cover;
   background-position: center;
   
-
 `
 export const RightContainer = styled.div`
   flex:1;
@@ -168,7 +165,7 @@ export const SignInButton=styled.button`
   border-radius:20px;
   justify-content:center;
   align-items:center;
-  margin-top:50px;
+  margin-top:20px;
   padding-top:5%;
   padding-bottom:5%;
   padding-left:10%;
@@ -188,7 +185,7 @@ export const ContinueWithGoogleButton=styled.button`
   border-radius:20px;
   justify-content:center;
   align-items:center;
-  margin-top:50px;
+  margin-top:30px;
   padding-top:5%;
   padding-bottom:5%;
   padding-left:10%;
@@ -205,7 +202,7 @@ export const ContinueWithGoogleButton=styled.button`
 export const ContinueWithDiv=styled.div`
   display:flex;
   flex-direction:row;
-  margin-top:40px;
+  margin-top:30px;
   justify-content:center;
   align-items:center;
   font-size:14px;
@@ -217,7 +214,7 @@ export const GoogleIcon=styled.div`
 export const SignUpText=styled.p`
   color:#B28680;
   text-align:center;
-  margin-top:40px;
+  margin-top:20px;
   width:100%;
 `;
 export const SignUpLink=styled.a`
