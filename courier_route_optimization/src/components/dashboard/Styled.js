@@ -1,0 +1,63 @@
+import styled from "styled-components";
+
+export const DashboardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #F5F7FA;
+  height: 100vh;
+  row-gap: 20px;
+`;
+export const Title=styled.h3`
+  color:#111827;
+  margin:40px;
+`;
+export const Header=styled.h2`
+  color:#11182E;
+  font-weight:bold;
+  font-size:24px;
+  margin:0px;
+`;
+export const Detail=styled.p`
+  color:#AD8580;
+  font-size:16px;
+`;
+export const CardContainer=styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 80px;
+  padding:20px;
+  
+`;
+export const ChartWrapper = styled.div`
+  width: 320px;        /* GRAFİĞİ KÜÇÜLTEN ASIL ŞEY */
+  height: 320px;
+  margin: 0 auto;
+  margin-bottom:40px;     
+`;
+export const Card=styled.div`
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex:1;
+`;
+export const CardP=styled.p`
+  color:#967280;
+  margin:0px;
+`;
+export const CardIcon=styled.div`
+  font-size:30px;
+  
+`;
+export const CardStatics=styled.h3`
+  color:#111827;
+  margin-top:10px;
+  margin-bottom:0px;
+`;
+export const CardP_Stat=styled.div`
+  display:flex;
+  flex-direction:column;
+  margin:0px;
+  margin-bottom:0px;
+  
+`;

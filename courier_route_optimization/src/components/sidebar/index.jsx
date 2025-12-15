@@ -3,12 +3,13 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import "primeicons/primeicons.css";
 import { SidebarContainer, LogoSection, LogoIcon, LogoText, MenuSection, MenuItem, SidebarFooter,MenuText } from "./Styled.js";
+import { useNavigate } from "react-router-dom";
 
 
 const SideBar = ({collapsed,setCollapsed}) => {
   
  
-
+  const navigate=useNavigate();
 
   return (
     <Sidebar
@@ -27,7 +28,7 @@ const SideBar = ({collapsed,setCollapsed}) => {
         </LogoSection>
 
         
-        <MenuSection>
+        <MenuSection onClick={()=>{navigate("/app/dashboard")}}>
           <MenuItem active>
             <i className="pi pi-th-large" />
             <MenuText collapsed={collapsed}>Dashboard</MenuText>
