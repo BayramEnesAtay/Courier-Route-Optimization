@@ -14,9 +14,6 @@ import {
   TextInput,
   PasswordInput,
   Button,
-  APIKeyRow,
-  Regenerate,
-  Note,
   NotificationContainer,
   NotificationItem,
   NotificationLabel,
@@ -94,36 +91,6 @@ const Settings = () => {
         </FormGroup>
 
         <Button onClick={handleSave}>Save Changes</Button>
-      </Card>
-
-      {/* API Configuration */}
-      <Card>
-        <ProfileDiv>
-          <Icon bgColor="#E6F4EA">
-            <FiKey fontSize={"24px"} color="#34A853" />
-          </Icon>
-          <DescDiv>
-            <SubTitle>API Configuration</SubTitle>
-            <SubDesc>Manage your API keys and integrations</SubDesc>
-          </DescDiv>
-        </ProfileDiv>
-
-        <FormGroup>
-          <Label>Google Maps API Key</Label>
-          <APIKeyRow>
-            <TextInput type="password" defaultValue="••••••••••" readOnly />
-            <Regenerate onClick={() => console.log("Regenerate API key")}>Regenerate</Regenerate>
-          </APIKeyRow>
-        </FormGroup>
-
-        <FormGroup>
-          <Label>Webhook URL</Label>
-          <TextInput type="text" placeholder="https://your-domain.com/webhook" />
-        </FormGroup>
-
-        <Note>
-          <b>Note:</b> Keep your API keys secure. Never share them publicly or commit them to version control.
-        </Note>
       </Card>
 
       {/* Notification Preferences */}

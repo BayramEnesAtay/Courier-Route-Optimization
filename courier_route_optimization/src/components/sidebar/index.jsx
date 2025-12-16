@@ -44,11 +44,6 @@ const SideBar = ({collapsed,setCollapsed}) => {
             <MenuText collapsed={collapsed}> Delivery Points</MenuText>
           </MenuItem>
 
-          <MenuItem>
-            <i className="pi pi-chart-bar" />
-            <MenuText collapsed={collapsed}> Analytics</MenuText>
-          </MenuItem>
-
           <MenuItem onClick={()=>{navigate("/app/settings")}} active>
             <i className="pi pi-cog" />
             <MenuText collapsed={collapsed}> Settings</MenuText>

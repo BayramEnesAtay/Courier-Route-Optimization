@@ -112,30 +112,6 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
-// API anahtar satırı
-export const APIKeyRow = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-`;
-
-// Yeniden oluştur bağlantısı
-export const Regenerate = styled.span`
-  color: #1A73E8;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-// Bilgilendirme kutusu
-export const Note = styled.div`
-  background-color: #F1F5FF;
-  border: 1px solid #DCE7FF;
-  border-radius: 8px;
-  padding: 12px;
-  color: #1A73E8;
-  font-size: 14px;
-  line-height: 1.4;
-`;
 
 // Bildirimler için kap
 export const NotificationContainer = styled.div`

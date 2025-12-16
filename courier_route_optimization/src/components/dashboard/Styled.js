@@ -206,11 +206,6 @@ export const TimeCell = styled.div`
   color: #111827;
 `;
 
-export const EfficiencyCell = styled.div`
-  flex: 1;
-  color: ${({ status }) => (status === "Completed" ? "#34A853" : "#4285F4")};
-`;
-
 export const RecentTitle = styled.h4`
   color: #111827;
   margin: 20px;

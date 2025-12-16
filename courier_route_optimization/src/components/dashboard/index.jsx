@@ -1,5 +1,5 @@
 import React from "react";
-import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper,ProgressCircle,PercentText,InnerCircle,SubText,Card2,Card3,ChartWrapper2,OptimizationTextDiv,OptimizationSubDiv,OptimizationNumber,OptimizationText,BottomContainer, RecentTable,RecentHeaderRow,RecentRow,RouteCell,PointsCell,StatusCell,StatusBadge,TimeCell,EfficiencyCell,RecentTitle} from "./Styled";
+import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper,ProgressCircle,PercentText,InnerCircle,SubText,Card2,Card3,ChartWrapper2,OptimizationTextDiv,OptimizationSubDiv,OptimizationNumber,OptimizationText,BottomContainer, RecentTable,RecentHeaderRow,RecentRow,RouteCell,PointsCell,StatusCell,StatusBadge,TimeCell,RecentTitle} from "./Styled";
 import { LuPackage } from "react-icons/lu";
 import { FaRoute } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
@@ -35,13 +35,11 @@ const Dashboard=()=>{
       const status = statuses[Math.floor(Math.random() * statuses.length)];
       const hours = Math.floor(Math.random() * 2) + 1;
       const minutes = Math.floor(Math.random() * 60);
-      const efficiency = Math.floor(Math.random() * 21) + 80;
       return {
         route: name,
         points,
         status,
         time: `${hours}h ${minutes}m`,
-        efficiency: `${efficiency}%`,
       };
     });
   };
@@ -136,7 +134,6 @@ const [recentRoutes] = useState(generateRandomRoutes);
               <PointsCell>Points</PointsCell>
               <StatusCell>Status</StatusCell>
               <TimeCell>Time</TimeCell>
-              <EfficiencyCell>Efficiency</EfficiencyCell>
             </RecentHeaderRow>
             {recentRoutes.map((item, index) => (
               <RecentRow key={index}>
@@ -148,7 +145,6 @@ const [recentRoutes] = useState(generateRandomRoutes);
                   <StatusBadge status={item.status}>{item.status}</StatusBadge>
                 </StatusCell>
                 <TimeCell>{item.time}</TimeCell>
-                <EfficiencyCell status={item.status}>{item.efficiency}</EfficiencyCell>
               </RecentRow>
             ))}
           </RecentTable>
