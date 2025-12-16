@@ -139,3 +139,80 @@ export const SubText = styled.div`
   font-size: 14px;
   color: #6b7280;
 `;
+
+
+export const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 20px;
+  flex:2;
+`;
+
+export const RecentTable = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding:40px 40px;
+`;
+
+export const RecentHeaderRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-weight: bold;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+`;
+
+export const RecentRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+`;
+
+export const RouteCell = styled.div`
+  flex: 2;
+  color: #111827;
+`;
+
+export const PointsCell = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  color: #111827;
+  column-gap: 4px;
+`;
+
+export const StatusCell = styled.div`
+  flex: 1.5;
+`;
+
+export const StatusBadge = styled.span`
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: ${({ status }) =>
+    status === "Completed" ? "#E6F4EA" : "#E0EFFF"};
+  color: ${({ status }) =>
+    status === "Completed" ? "#34A853" : "#4285F4"};
+`;
+
+export const TimeCell = styled.div`
+  flex: 1;
+  color: #111827;
+`;
+
+export const EfficiencyCell = styled.div`
+  flex: 1;
+  color: ${({ status }) => (status === "Completed" ? "#34A853" : "#4285F4")};
+`;
+
+export const RecentTitle = styled.h4`
+  color: #111827;
+  margin: 20px;
+  margin-bottom: 10px;
+`;

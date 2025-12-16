@@ -1,9 +1,10 @@
 import React from "react";
-import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper,ProgressCircle,PercentText,InnerCircle,SubText,Card2,Card3,ChartWrapper2,OptimizationTextDiv,OptimizationSubDiv,OptimizationNumber,OptimizationText } from "./Styled";
+import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper,ProgressCircle,PercentText,InnerCircle,SubText,Card2,Card3,ChartWrapper2,OptimizationTextDiv,OptimizationSubDiv,OptimizationNumber,OptimizationText,BottomContainer, RecentTable,RecentHeaderRow,RecentRow,RouteCell,PointsCell,StatusCell,StatusBadge,TimeCell,EfficiencyCell,RecentTitle} from "./Styled";
 import { LuPackage } from "react-icons/lu";
 import { FaRoute } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
-import { FaRegClock } from "react-icons/fa";
+import { FaRegClock,FaMapMarkerAlt } from "react-icons/fa";
+import { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -23,7 +24,29 @@ import {
 
 ChartJS.register(ArcElement, TooltipJS, Legend);
 
+
 const Dashboard=()=>{
+
+    const generateRandomRoutes = () => {
+    const statuses = ["Completed", "In Progress"];
+    const names = ["Route A-12", "Route B-08", "Route C-15", "Route D-03"];
+    return names.map((name) => {
+      const points = Math.floor(Math.random() * 15) + 5;
+      const status = statuses[Math.floor(Math.random() * statuses.length)];
+      const hours = Math.floor(Math.random() * 2) + 1;
+      const minutes = Math.floor(Math.random() * 60);
+      const efficiency = Math.floor(Math.random() * 21) + 80;
+      return {
+        route: name,
+        points,
+        status,
+        time: `${hours}h ${minutes}m`,
+        efficiency: `${efficiency}%`,
+      };
+    });
+  };
+const [recentRoutes] = useState(generateRandomRoutes);
+
   const weeklyData=[
     { day: "Mon", planned: 45, completed: 38 },
     { day: "Tue", planned: 50, completed: 47 },
@@ -104,15 +127,34 @@ const Dashboard=()=>{
         </ChartWrapper2>
       </Card2>
       
-      <Card3>
-        <Title>Route Optimization Rate</Title>
-        <ProgressCircle>
-          <InnerCircle>
-            <PercentText>85 %</PercentText>
-            <SubText>Optimized</SubText>
-          </InnerCircle>
-        </ProgressCircle>
-      </Card3>
+      <BottomContainer>
+        <Card3>
+          <RecentTitle>Recent Routes</RecentTitle>
+          <RecentTable>
+            <RecentHeaderRow>
+              <RouteCell>Route</RouteCell>
+              <PointsCell>Points</PointsCell>
+              <StatusCell>Status</StatusCell>
+              <TimeCell>Time</TimeCell>
+              <EfficiencyCell>Efficiency</EfficiencyCell>
+            </RecentHeaderRow>
+            {recentRoutes.map((item, index) => (
+              <RecentRow key={index}>
+                <RouteCell>{item.route}</RouteCell>
+                <PointsCell>
+                  <FaMapMarkerAlt color="#7E72A1" /> {item.points}
+                </PointsCell>
+                <StatusCell>
+                  <StatusBadge status={item.status}>{item.status}</StatusBadge>
+                </StatusCell>
+                <TimeCell>{item.time}</TimeCell>
+                <EfficiencyCell status={item.status}>{item.efficiency}</EfficiencyCell>
+              </RecentRow>
+            ))}
+          </RecentTable>
+        </Card3>
+      </BottomContainer>
+
 
     </CardContainer>
   </DashboardContainer>  
