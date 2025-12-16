@@ -34,7 +34,7 @@ const SideBar = ({collapsed,setCollapsed}) => {
             <MenuText collapsed={collapsed}>Dashboard</MenuText>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem active onClick={()=>{navigate("/app/route-optimization")}}>
             <i className="pi pi-sliders-h" />
             <MenuText collapsed={collapsed}> Route Optimization</MenuText>
           </MenuItem>
