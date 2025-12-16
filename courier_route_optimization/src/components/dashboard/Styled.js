@@ -35,11 +35,55 @@ export const ChartWrapper = styled.div`
   margin: 0 auto;
   margin-bottom:40px;     
 `;
+export const ChartWrapper2 = styled.div`
+  width: 320px;        /* GRAFİĞİ KÜÇÜLTEN ASIL ŞEY */
+  height: auto;
+  margin: 0 auto;
+  margin-bottom:10px;
+  flex-direction:column;
+  display:flex;
+  justify-content:center;
+  align-items:center;    
+`;
+export const OptimizationText=styled.p`
+  color:#967290;
+  font-size:14px;
+  margin-top:5px;
+`;
+export const OptimizationNumber=styled.p`
+  color:#1B75E0;
+  font-size:30px;
+  margin-bottom:10px;
+`;
+export const OptimizationTextDiv=styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+  column-gap:40px;
+`;
+export const OptimizationSubDiv=styled.div`
+  display:flex;
+  flex-direction:column;
+  
+`;
 export const Card=styled.div`
   background-color: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex:1;
+`;
+export const Card2=styled.div`
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex:0.5;
+`;
+export const Card3=styled.div`
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex:2;
 `;
 export const CardP=styled.p`
   color:#967280;
@@ -60,4 +104,38 @@ export const CardP_Stat=styled.div`
   margin:0px;
   margin-bottom:0px;
   
+`;
+export const ProgressCircle = styled.div`
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #22c55e 0% 85%,
+    #e5e7eb 85% 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const InnerCircle = styled.div`
+  width: 160px;
+  height: 160px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PercentText = styled.div`
+  font-size: 32px;
+  font-weight: bold;
+  color: #111827;
+`;
+
+export const SubText = styled.div`
+  font-size: 14px;
+  color: #6b7280;
 `;

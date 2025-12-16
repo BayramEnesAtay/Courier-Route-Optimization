@@ -1,5 +1,5 @@
 import React from "react";
-import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper } from "./Styled";
+import { DashboardContainer,CardContainer,Card,Detail,Header,CardP,CardStatics,CardIcon,CardP_Stat,Title,ChartWrapper,ProgressCircle,PercentText,InnerCircle,SubText,Card2,Card3,ChartWrapper2,OptimizationTextDiv,OptimizationSubDiv,OptimizationNumber,OptimizationText } from "./Styled";
 import { LuPackage } from "react-icons/lu";
 import { FaRoute } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
@@ -78,6 +78,42 @@ const Dashboard=()=>{
       <Doughnut data={statusData} options={{ cutout: "70%" }}/>
       </ChartWrapper>
     </Card>
+    </CardContainer>
+
+    <CardContainer>
+      
+      <Card2>
+        <Title>Route Optimization Rate</Title>
+        <ChartWrapper2>
+        <ProgressCircle>
+          <InnerCircle>
+            <PercentText>85 %</PercentText>
+            <SubText>Optimized</SubText>
+          </InnerCircle>
+        </ProgressCircle>
+        <OptimizationTextDiv>
+          <OptimizationSubDiv>
+            <OptimizationNumber>327</OptimizationNumber>
+            <OptimizationText>Optimized</OptimizationText>
+          </OptimizationSubDiv>
+          <OptimizationSubDiv>
+            <OptimizationNumber>58</OptimizationNumber>
+            <OptimizationText>Standart</OptimizationText>
+          </OptimizationSubDiv>
+        </OptimizationTextDiv>
+        </ChartWrapper2>
+      </Card2>
+      
+      <Card3>
+        <Title>Route Optimization Rate</Title>
+        <ProgressCircle>
+          <InnerCircle>
+            <PercentText>85 %</PercentText>
+            <SubText>Optimized</SubText>
+          </InnerCircle>
+        </ProgressCircle>
+      </Card3>
+
     </CardContainer>
   </DashboardContainer>  
   );

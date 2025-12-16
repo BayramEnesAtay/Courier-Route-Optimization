@@ -28,8 +28,8 @@ const SideBar = ({collapsed,setCollapsed}) => {
         </LogoSection>
 
         
-        <MenuSection onClick={()=>{navigate("/app/dashboard")}}>
-          <MenuItem active>
+        <MenuSection >
+          <MenuItem active onClick={()=>{navigate("/app/dashboard")}}>
             <i className="pi pi-th-large" />
             <MenuText collapsed={collapsed}>Dashboard</MenuText>
           </MenuItem>
@@ -49,7 +49,7 @@ const SideBar = ({collapsed,setCollapsed}) => {
             <MenuText collapsed={collapsed}> Analytics</MenuText>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem onClick={()=>{navigate("/app/settings")}} active>
             <i className="pi pi-cog" />
             <MenuText collapsed={collapsed}> Settings</MenuText>
           </MenuItem>
