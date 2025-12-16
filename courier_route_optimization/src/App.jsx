@@ -8,6 +8,7 @@ import Layout from "./components/Layout.jsx";
 import Dashboard from "./components/dashboard/index.jsx";
 import Settings from "./components/settings/index.jsx";
 import RouteOptimizationPage from "./components/route_optimization/index.jsx";
+import DeliveryPoints from "./components/delivery_points/index.jsx";
 
 const App=()=>{
   //the path for the sidebar will change.
@@ -20,6 +21,7 @@ const App=()=>{
           <Route path="dashboard" element={<Dashboard />}/>
           <Route path="settings" element={<Settings />}/>
           <Route path="route-optimization" element={<RouteOptimizationPage />}/>
+          <Route path="delivery-points" element={<DeliveryPoints />}/>
         </Route>
       </Routes>
     </BrowserRouter>

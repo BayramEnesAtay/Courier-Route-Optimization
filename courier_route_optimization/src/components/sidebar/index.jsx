@@ -39,7 +39,7 @@ const SideBar = ({collapsed,setCollapsed}) => {
             <MenuText collapsed={collapsed}> Route Optimization</MenuText>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem active onClick={()=>{navigate("/app/delivery-points")}}>
             <i className="pi pi-map-marker" />
             <MenuText collapsed={collapsed}> Delivery Points</MenuText>
           </MenuItem>
