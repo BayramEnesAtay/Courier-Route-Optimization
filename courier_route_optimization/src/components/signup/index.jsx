@@ -52,15 +52,7 @@ const SignUp=()=>{
                 </MailIcon>
                 <MailInput type="email" placeholder="name@company.com"/>
               </MailDiv>
-
-              <MailDiv>
-                <MailLabel>Company Name</MailLabel>
-                <MailIcon>
-                  <FaRegBuilding />
-                </MailIcon>
-                <MailInput type="text" placeholder="Your company name"/>
-              </MailDiv>
-            
+              
               <MailDiv>
                 <MailLabel>Password</MailLabel>
                 <MailIcon>
