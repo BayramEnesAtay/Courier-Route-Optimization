@@ -5,7 +5,7 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   padding: 20px;
   background-color: #f5f7fa;
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
 `;
 
@@ -26,6 +26,7 @@ export const ContentWrapper = styled.div`
   flex-direction: row;
   gap: 20px;
   flex: 1;
+  min-height: 0;
 `;
 
 export const DeliveryManagementPanel = styled.div`
@@ -33,7 +34,9 @@ export const DeliveryManagementPanel = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-height: 0;
 `;
+
 
 export const AddPointCard = styled.div`
   background-color: #ffffff;
@@ -164,130 +167,16 @@ export const MapAndLegendWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;  /* taşmaları engeller */
+  min-height: 0;
 `;
-
 export const MapArea = styled.div`
-  background-color: #eaf4fd;
-  background-image: linear-gradient(#e0e7ed 1px, transparent 1px),
-    linear-gradient(90deg, #e0e7ed 1px, transparent 1px);
-  background-size: 40px 40px;
-  border-radius: 10px;
-  flex: 1;
   position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;          /* ❗ kritik */
   overflow: hidden;
-`;
-
-export const RouteMarkerWrapper = styled.div`
-  position: absolute;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-  transform: translate(-50%, -50%);
-`;
-
-export const RouteMarkerCircle = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: #ffffff;
-  background-color: ${({ pointType }) =>
-    pointType === "start"
-      ? "#22c55e"
-      : pointType === "delivery"
-      ? "#3b82f6"
-      : "#ef4444"};
-`;
-
-export const CourierMarkerWrapper = styled.div`
-  position: absolute;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: rgba(252, 211, 77, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const CourierOuterCircle = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: rgba(252, 211, 77, 0.25);
-  z-index: 0;
-`;
-
-export const CourierInnerCircle = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #facc15;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-`;
-
-export const ZoomControls = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-export const ZoomButton = styled.button`
-  width: 40px;
-  height: 40px;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 18px;
-  color: #111827;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-`;
-
-export const LegendCard = styled.div`
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  background: #fff;
 `;
-
-export const LegendItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-export const LegendIcon = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: ${({ bgColor }) => bgColor};
-`;
-
-export const LegendLabel = styled.span`
-  color: #4b5563;
-  font-size: 14px;
-`;
+  

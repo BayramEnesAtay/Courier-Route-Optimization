@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaPlus } from "react-icons/fa";
-import {
-  FiPlus,
-  FiMinus,
-  FiUser,
-  FiMoreVertical,
-  FiHelpCircle,
-} from "react-icons/fi";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import {
   PageWrapper,
   PageHeading,
@@ -31,22 +27,33 @@ import {
   OptimizeRouteButton,
   MapAndLegendWrapper,
   MapArea,
-  RouteMarkerWrapper,
-  RouteMarkerCircle,
-  CourierMarkerWrapper,
-  CourierOuterCircle,
-  CourierInnerCircle,
-  ZoomControls,
-  ZoomButton,
-  LegendCard,
-  LegendItem,
-  LegendIcon,
-  LegendLabel,
 } from "./Styled";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 const RouteOptimizationPage = () => {
   const [pointName, setPointName] = useState("");
   const [pointAddress, setPointAddress] = useState("");
+
+  const mapRef = useRef(null);
+  const mapWrapperRef = useRef(null); // 🔥 EKLENDİ
+
+  const courierPosition = [39.9667, 32.8167];
+
+  const demoPoints = [
+    { id: 1, name: "Main Warehouse", position: [39.9705, 32.8094] },
+    { id: 2, name: "Delivery A", position: [39.9622, 32.8231] },
+    { id: 3, name: "Delivery B", position: [39.9589, 32.8147] },
+  ];
+
   const [points, setPoints] = useState([
     {
       id: 1,
@@ -67,27 +74,40 @@ const RouteOptimizationPage = () => {
       type: "end",
     },
   ]);
-  const [markers, setMarkers] = useState([
-    { id: 1, top: "50%", left: "30%" },
-    { id: 2, top: "60%", left: "45%" },
-    { id: 3, top: "40%", left: "65%" },
-  ]);
 
-  // Add delivery point
   const handleAddPoint = () => {
     if (!pointName.trim() || !pointAddress.trim()) return;
+
     const newId = points.length + 1;
     setPoints([
       ...points,
       { id: newId, name: pointName, address: pointAddress, type: "delivery" },
     ]);
-    // assign random marker position within map area
-    const randomTop = `${Math.floor(Math.random() * 60) + 20}%`;
-    const randomLeft = `${Math.floor(Math.random() * 60) + 20}%`;
-    setMarkers([...markers, { id: newId, top: randomTop, left: randomLeft }]);
+
     setPointName("");
     setPointAddress("");
   };
+
+  // 🔥 ASIL ÇÖZÜM BURASI
+  useEffect(() => {
+    if (!mapRef.current || !mapWrapperRef.current) return;
+
+    const map = mapRef.current;
+    const container = mapWrapperRef.current;
+
+    const resizeObserver = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+
+    resizeObserver.observe(container);
+
+    // ilk render güvenliği
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   return (
     <PageWrapper>
@@ -95,27 +115,29 @@ const RouteOptimizationPage = () => {
       <PageSubheading>
         Add delivery points and optimize your route for maximum efficiency
       </PageSubheading>
+
       <ContentWrapper>
-        {/* Delivery point management */}
+        {/* SOL PANEL */}
         <DeliveryManagementPanel>
           <AddPointCard>
             <AddPointHeading>Add Delivery Point</AddPointHeading>
+
             <FormGroup>
               <FormLabel>Point Name</FormLabel>
               <FormInput
-                placeholder="e.g., Customer Location"
                 value={pointName}
                 onChange={(e) => setPointName(e.target.value)}
               />
             </FormGroup>
+
             <FormGroup>
               <FormLabel>Address</FormLabel>
               <FormInput
-                placeholder="Enter full address"
                 value={pointAddress}
                 onChange={(e) => setPointAddress(e.target.value)}
               />
             </FormGroup>
+
             <AddPointButton onClick={handleAddPoint}>
               <FaPlus /> Add Point
             </AddPointButton>
@@ -125,6 +147,7 @@ const RouteOptimizationPage = () => {
             <PointsListHeading>
               Delivery Points ({points.length})
             </PointsListHeading>
+
             <PointsList>
               {points.map((p, index) => (
                 <PointListItem key={p.id}>
@@ -133,73 +156,43 @@ const RouteOptimizationPage = () => {
                     <PointName>{p.name}</PointName>
                     <PointAddress>{p.address}</PointAddress>
                   </PointInfo>
-                    <PointActions>
-                      <FiMoreVertical />
-                    </PointActions>
+                  <PointActions>⋮</PointActions>
                 </PointListItem>
               ))}
             </PointsList>
+
             <OptimizeRouteButton>Optimize Route</OptimizeRouteButton>
           </PointsListCard>
         </DeliveryManagementPanel>
 
-        {/* Map and legend */}
+        {/* HARİTA */}
         <MapAndLegendWrapper>
-          <MapArea>
-            {/* Courier location */}
-            <CourierMarkerWrapper top="55%" left="50%">
-              <CourierOuterCircle />
-              <CourierInnerCircle>
-                <FiUser size={20} color="#ffffff" />
-              </CourierInnerCircle>
-            </CourierMarkerWrapper>
+          <MapArea ref={mapWrapperRef}>
+            <MapContainer
+              center={courierPosition}
+              zoom={13}
+              style={{ width: "100%", height: "100%" }}
+              whenCreated={(mapInstance) => {
+                mapRef.current = mapInstance;
+              }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap contributors"
+                updateWhenIdle={true}
+              />
 
-            {/* Route markers */}
-            {points.map((p, idx) => {
-              const pos = markers[idx] || { top: "50%", left: "50%" };
-              return (
-                <RouteMarkerWrapper
-                  key={p.id}
-                  top={pos.top}
-                  left={pos.left}
-                >
-                  <RouteMarkerCircle pointType={p.type}>
-                    {idx + 1}
-                  </RouteMarkerCircle>
-                </RouteMarkerWrapper>
-              );
-            })}
+              <Marker position={courierPosition}>
+                <Popup>Courier Location</Popup>
+              </Marker>
 
-            {/* Zoom controls */}
-            <ZoomControls>
-              <ZoomButton>
-                <FiPlus />
-              </ZoomButton>
-              <ZoomButton>
-                <FiMinus />
-              </ZoomButton>
-            </ZoomControls>
+              {demoPoints.map((p) => (
+                <Marker key={p.id} position={p.position}>
+                  <Popup>{p.name}</Popup>
+                </Marker>
+              ))}
+            </MapContainer>
           </MapArea>
-
-          {/* Legend */}
-          <LegendCard>
-            <LegendItem>
-              <LegendIcon bgColor="#FACC15" />
-              <LegendLabel>Courier Location</LegendLabel>
-            </LegendItem>
-            <LegendItem>
-              <LegendIcon bgColor="#22C55E" />
-              <LegendLabel>Start Point</LegendLabel>
-            </LegendItem>
-            <LegendItem>
-              <LegendIcon bgColor="#3B82F6" />
-              <LegendLabel>Delivery Point</LegendLabel>
-            </LegendItem>
-            <LegendItem>
-              <LegendIcon bgColor="#EF4444" />
-              <LegendLabel>End Point</LegendLabel>
-            </LegendItem>
-          </LegendCard>
         </MapAndLegendWrapper>
       </ContentWrapper>
     </PageWrapper>
