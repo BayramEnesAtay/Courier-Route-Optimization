@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Main{% endblock %}</title>
+</head>
+<body>
+
+<nav>
+    <a href="{% url 'core:dashboard' %}">Dashboard</a>
+    <a href="{% url 'core:routeopt' %}">Route Optimization</a>
+    <a href="{% url 'core:deliverypoints' %}">Delivery Points</a>
+    <a href="{% url 'core:settings' %}">Settings</a>
+
+    <span style="float:right;">
+        {{ request.user.username }}
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+    </span>
+</nav>
+
+<hr>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
+
