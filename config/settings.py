@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-16ycp8^9b%h#0s=+967@0fb5&z1+&923w72wp*-q(qq^6w0js-'
+SECRET_KEY = 'django-insecure-7r54)0s$4ykq!%*&50mell&)(r6-m$v7n3^r-#(iq)mzdkg3^*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'optimizer',
     'corsheaders',#tarayıcının postunu kabul etmesı ıcın lazım.
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # İstersen güvenliği artırmak için şu satırı açabilirsin (Opsiyonel):
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #    'rest_framework.permissions.IsAuthenticated', # Sadece giriş yapanlar hesaplatabilsin
+    # ),
+}
