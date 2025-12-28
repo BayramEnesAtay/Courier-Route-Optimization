@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { FiList, FiPlus, FiX, FiCheck } from "react-icons/fi"; 
+import { FiList, FiPlus, FiX } from "react-icons/fi"; 
 
 // --- APIS ---
 const DB_API_URL = "http://127.0.0.1:8000/api/delivery-points/"; 
@@ -86,7 +86,7 @@ const RouteOptimizationPage = () => {
     alert(`${dbPoint.name} rotaya eklendi.`);
   };
 
-  // --- BURASI GÜNCELLENDİ: Hem Haritaya Hem Veritabanına Ekleme ---
+  //  Hem Haritaya Hem Veritabanına Ekleme ---
   const addManualPoint = async () => {
     // 1. Validasyon
     if (!newPoint.name || !newPoint.lat || !newPoint.lng) {
@@ -98,8 +98,8 @@ const RouteOptimizationPage = () => {
     // Manuel eklemede Adres ve Şehir kutusu olmadığı için otomatik dolduruyoruz.
     const pointDataForBackend = {
         name: newPoint.name,
-        street: "Haritadan Eklendi", // Placeholder adres
-        city: "Ankara",              // Placeholder şehir
+        street: "Haritadan Eklendi", 
+        city: "Ankara",              
         coordinates: `${newPoint.lat}, ${newPoint.lng}` // Format: "Enlem, Boylam"
     };
 
@@ -112,7 +112,7 @@ const RouteOptimizationPage = () => {
         });
 
         if (res.ok) {
-            const savedPoint = await res.json(); // Backend'den kaydedilen veriyi (ID dahil) al
+            const savedPoint = await res.json(); 
             
             // 4. Haritaya (Local State) Ekle
             const pointForMap = {
@@ -138,7 +138,7 @@ const RouteOptimizationPage = () => {
         alert("Sunucuya bağlanılamadı.");
     }
   };
-  // -----------------------------------------------------------
+
 
   const handleOptimize = async () => {
     if (points.length < 2) return alert("En az 2 nokta eklemelisiniz.");
@@ -218,6 +218,7 @@ const RouteOptimizationPage = () => {
           <p style={{fontSize: "12px", color: "#666", marginBottom: "8px"}}>
             (Durak sıralaması optimize edilir)
           </p>
+          {/* --- DEĞİŞİKLİK BURADA: SELECT MENÜSÜ --- */}
           <select 
             value={algorithm} 
             onChange={(e) => setAlgorithm(e.target.value)}
@@ -225,6 +226,7 @@ const RouteOptimizationPage = () => {
           >
             <option value="dijkstra">Dijkstra (Standart)</option>
             <option value="astar">A* (Heuristic - Hızlı)</option>
+            <option value="bellman">Bellman-Ford (Analiz İçin)</option>
           </select>
           <button onClick={handleOptimize} disabled={loading} style={{...btnStyle, background: loading ? "#ccc" : "#2ecc71"}}>
             {loading ? "Hesaplanıyor..." : "Rotayı Hesapla"}
@@ -324,7 +326,7 @@ const RouteOptimizationPage = () => {
   );
 };
 
-// Stiller
+
 const cardStyle = { background: "#fff", padding: "15px", borderRadius: "8px", border: "1px solid #ddd", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" };
 const inputStyle = { width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "4px", border: "1px solid #ccc", boxSizing: "border-box" };
 const btnStyle = { width: "100%", padding: "10px", background: "#3498db", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold", transition: "0.2s" };

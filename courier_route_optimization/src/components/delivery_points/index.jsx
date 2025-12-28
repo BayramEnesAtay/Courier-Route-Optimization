@@ -61,7 +61,7 @@ const DeliveryPoints = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // --- İSTATİSTİK STATE'LERİ (YENİ) ---
+
   const [stats, setStats] = useState({
     totalPoints: 0,
     activeRoutes: 0,
@@ -99,20 +99,19 @@ const DeliveryPoints = () => {
     fetchPoints();
   }, []);
 
-  // --- HESAPLAMA MANTIĞI (YENİ) ---
-  // points dizisi her değiştiğinde bu çalışır ve istatistikleri günceller.
+
   useEffect(() => {
     if (points.length === 0) {
         setStats({ totalPoints: 0, activeRoutes: 0, weeklyAdditions: 0, coverageArea: 0 });
         return;
     }
 
-    // 1. Total Points (Toplam Nokta)
+  
     const total = points.length;
 
-    // 2. This Week (Bu Hafta Eklenenler)
+    
     const now = new Date();
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 gün öncesi
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); 
     
     const weeklyCount = points.filter(p => {
         // Backend tarihi "dd.MM.yyyy" formatında geliyor, bunu Date objesine çevirmemiz lazım
@@ -149,14 +148,12 @@ const DeliveryPoints = () => {
         area = (heightKm * widthKm).toFixed(2); // Virgülden sonra 2 hane
     }
 
-    // 4. Active Routes (Tahmini)
-    // Şu an backend'de "Aktif Rota" tablosu olmadığı için;
-    // Her 10 durak için 1 kurye rotası gerektiğini varsayıyoruz.
+    
     const estimatedRoutes = Math.ceil(total / 10);
 
     setStats({
         totalPoints: total,
-        activeRoutes: estimatedRoutes, // Veya backend destekleyene kadar 0 yapabilirsin
+        activeRoutes: estimatedRoutes, 
         weeklyAdditions: weeklyCount,
         coverageArea: area
     });
@@ -298,7 +295,7 @@ const DeliveryPoints = () => {
       <StatsPanel>
         <StatCard>
           <StatTitle>Total Points</StatTitle>
-          {/* STATS DEĞERLERİ BURADA GÜNCELLENDİ */}
+        
           <StatValue>{stats.totalPoints}</StatValue>
         </StatCard>
         <StatCard>
