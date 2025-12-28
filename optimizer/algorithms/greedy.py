@@ -5,7 +5,7 @@ def distance(p1, p2):
     İki nokta arasındaki Öklid mesafesi (Pisagor).
     p1 ve p2 sözlük formatındadır: {'lat': 39.9, 'lng': 32.8}
     """
-    # ÖNCEKİ HATA BURADAYDI: p1[0] yerine p1['lat'] kullanılmalı
+   
     lat_diff = p1['lat'] - p2['lat']
     lng_diff = p1['lng'] - p2['lng']
     return math.sqrt(lat_diff**2 + lng_diff**2)

@@ -7,14 +7,15 @@ import osmnx as ox
 # Algoritmalar
 from .algorithms.dijkstra import dijkstra 
 from .algorithms.greedy import greedy_route
-from .algorithms.a_star import a_star_path # <-- Yeni Pathfinding A* importu
+from .algorithms.a_star import a_star_path 
 from .algorithms.osm_graph import load_yenimahalle_graph
+from .algorithms.bellman_ford import bellman_ford  
 
 @csrf_exempt
 def route_osm(request):
     """
     Sıralama: DAİMA GREEDY (Arka planda)
-    Yol Çizme: Kullanıcı seçimine göre DIJKSTRA veya A*
+    Yol Çizme: Kullanıcı seçimine göre DIJKSTRA, A* veya BELLMAN-FORD
     """
     if request.method != "POST":
         return JsonResponse({"error": "POST required"}, status=400)
@@ -22,7 +23,7 @@ def route_osm(request):
     try:
         data = json.loads(request.body)
         points = data.get("points", [])
-        # Dropdown'dan gelen seçim: "dijkstra" veya "astar"
+        # Dropdown'dan gelen seçim: "dijkstra", "astar" veya "bellman"
         algo_choice = data.get("algorithm", "dijkstra") 
 
         if not points or len(points) < 2:
@@ -54,9 +55,9 @@ def route_osm(request):
             for p in points
         ]
 
-        # -----------------------------------------------------------
-        # ADIM 1: DURAK SIRALAMA (DAİMA GREEDY)
-        # -----------------------------------------------------------
+    
+        
+        
         try:
             # Arka planda hep Greedy çalışır ve en mantıklı sırayı bulur
             sorted_stops = greedy_route(clean_points[0], clean_points[1:])
@@ -66,9 +67,9 @@ def route_osm(request):
             print(f"Sıralama Hatası: {e}")
             ordered_points = clean_points
 
-        # -----------------------------------------------------------
-        # ADIM 2: YOL ÇİZME (PATHFINDING - SEÇİMLİ)
-        # -----------------------------------------------------------
+       
+        
+        
         full_path_coords = []
         total_distance = 0
 
@@ -80,10 +81,15 @@ def route_osm(request):
 
             # Kullanıcı ne seçtiyse o algoritmayı çalıştır
             if algo_choice == "astar":
-                # A* Algoritması (Koordinatları da gönderiyoruz)
+                # A* Algoritması
                 path_ids, segment_dist = a_star_path(custom_graph_dict, str(n1), str(n2), node_coords)
+            
+            elif algo_choice == "bellman":  
+                # Bellman-Ford Algoritması
+                path_ids, segment_dist = bellman_ford(custom_graph_dict, str(n1), str(n2))
+            
             else:
-                # Dijkstra Algoritması (Varsayılan)
+                # Dijkstra Algoritması 
                 path_ids, segment_dist = dijkstra(custom_graph_dict, str(n1), str(n2))
 
             if not path_ids or segment_dist == float("inf"): continue
@@ -101,7 +107,7 @@ def route_osm(request):
             "path": full_path_coords,
             "total_distance": round(total_distance, 2),
             "ordered_points": ordered_points,
-            "used_algorithm": algo_choice # Bilgi amaçlı geri dönüyoruz
+            "used_algorithm": algo_choice 
         })
 
     except Exception as e:
