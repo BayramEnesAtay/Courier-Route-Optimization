@@ -9,8 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import math
 
-# --- SAYFA VIEWLARI (HTML Döndürenler) ---
-# Bu viewlar React uygulamanın mount edileceği HTML şablonlarını döndürür.
+
 
 @login_required
 def dashboard(request):
@@ -22,7 +21,7 @@ def routeopt(request):
 
 @login_required
 def deliverypoints(request):
-    # Artık verileri React çekiyor, burası sadece ana iskeleti (HTML) döndürür.
+    
     return render(request, "core/deliverypoints.html")
 
 @login_required
@@ -30,7 +29,7 @@ def settings(request):
     return render(request, "core/settings.html")
 
 
-# --- API VIEWLARI (React ile Konuşan Kısım) ---
+
 
 @csrf_exempt
 def delivery_points_api(request):
@@ -42,13 +41,13 @@ def delivery_points_api(request):
         points = DeliveryPoint.objects.all().order_by("-created_at")
         data = []
         for p in points:
-            # Koordinatları string olarak birleştirip React'e gönderiyoruz (örn: "40.123, -74.567")
+        
             coord_str = f"{p.latitude}, {p.longitude}"
             
             data.append({
                 "id": p.id,
                 "name": p.name,
-                "street": p.address,  # React 'street' bekliyor, modelde 'address'
+                "street": p.address,  
                 "city": p.city,
                 "coordinates": coord_str,
                 "created": p.created_at.strftime("%d.%m.%Y") if p.created_at else "",
@@ -123,8 +122,6 @@ def delivery_point_detail_api(request, pk):
 
     return JsonResponse({"error": "Method not allowed"}, status=405)
 
-
-# --- YARDIMCI FONKSİYONLAR & ALGORİTMA ---
 
 def calculate_distance(coord1, coord2):
     R = 6371  # Dünya yarıçapı (km)

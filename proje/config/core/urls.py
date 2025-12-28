@@ -4,13 +4,13 @@ from . import views
 app_name = "core"
 
 urlpatterns = [
-    # --- HTML SAYFALARI (React Uygulamasının Görüntülendiği Yerler) ---
+
     path("", views.dashboard, name="dashboard"),
     path("routeopt/", views.routeopt, name="routeopt"),
     path("deliverypoints/", views.deliverypoints, name="deliverypoints"),
     path("settings/", views.settings, name="settings"),
     
-    # --- API ENDPOINTS (React'in Veri Çekip Gönderdiği Yerler) ---
+  
     
     # GET (Listeleme) ve POST (Ekleme) için:
     path("api/delivery-points/", views.delivery_points_api, name="api_delivery_points"),
