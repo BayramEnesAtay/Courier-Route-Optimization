@@ -44,10 +44,7 @@ const SideBar = ({collapsed,setCollapsed}) => {
             <MenuText collapsed={collapsed}> Delivery Points</MenuText>
           </MenuItem>
 
-          <MenuItem onClick={()=>{navigate("/app/settings")}} active>
-            <i className="pi pi-cog" />
-            <MenuText collapsed={collapsed}> Settings</MenuText>
-          </MenuItem>
+          
         </MenuSection>
 
         
