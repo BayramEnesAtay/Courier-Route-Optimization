@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h2>Kayıt Ol</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% for error in field.errors %}
+            <span style="color:red">{{ error }}</span>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <button type="submit">Kayıt Ol</button>
+    </form>
+
+    <p>Zaten üye misin? <a href="{% url 'login' %}">Giriş Yap</a></p>
+</body>
+</html>
+

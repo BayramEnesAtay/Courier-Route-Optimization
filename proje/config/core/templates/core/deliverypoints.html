@@ -1,0 +1,144 @@
+{% extends 'core/base.html' %} {% block content %}
+
+<h2>Delivery Points</h2>
+
+<form method="get">
+  <input
+    type="text"
+    name="q"
+    placeholder="Search by name"
+    value="{{ query }}"
+  />
+  <button type="submit">Search</button>
+</form>
+
+<div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Delivery Points List</h2>
+
+    <button onclick="openModal()">
+      ➕ Add Point
+    </button>
+</div>
+
+<div style="display:flex; gap:15px; margin-bottom:20px;">
+      <div class="stat-box">Total Points<br><strong>{{ total_points }}</strong></div>
+      <div class="stat-box">Active Routes<br><strong>0</strong></div>
+      <div class="stat-box">This Week<br><strong>{{ this_week }}</strong></div>
+      <div class="stat-box">Coverage Area<br><strong>—</strong></div>
+</div>
+
+<table border="1" cellpadding="6" style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>
+        <a href="?sort={% if current_sort == 'name' %}-name{% else %}name{% endif %}">Name</a>
+      </th>
+      <th>
+        <a href="?sort={% if current_sort == 'address' %}-address{% else %}address{% endif %}">Address</a>
+      </th>
+      <th>Coordinates</th>
+      <th>
+        <a href="?sort={% if current_sort == 'created_at' %}-created_at{% else %}created_at{% endif %}">Created</a>
+      </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for point in delivery_points %}
+    <tr>
+      <td>{{ point.name }}</td>
+      <td>{{ point.address }}, {{ point.city }}</td>
+      <td>{{ point.latitude }}, {{ point.longitude }}</td>
+      <td>{{ point.created_at|date:"Y-m-d H:i" }}</td>
+      <td>
+        <a href="{% url 'core:edit_delivery_point' point.id %}">✏️</a>
+        <a href="{% url 'core:delete_delivery_point' point.id %}">🗑️</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5">No delivery points found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div id="addPointModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Add Delivery Point</h3>
+        
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Point Name:</label><br>
+            <input type="text" name="name" required style="width: 100%;"><br><br>
+
+            <label>Address:</label><br>
+            <input type="text" name="address" required style="width: 100%;"><br><br>
+
+            <label>City:</label><br>
+            <input type="text" name="city" required style="width: 100%;"><br><br>
+
+            <div style="text-align: right;">
+                <button type="button" onclick="closeModal()" style="background-color: #ccc;">Cancel</button>
+                <button type="submit" style="background-color: #4CAF50; color: white;">Add Point</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openModal() {
+    document.getElementById("addPointModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("addPointModal").style.display = "none";
+}
+
+// Modal dışına tıklayınca kapanması için opsiyonel kod
+window.onclick = function(event) {
+    var modal = document.getElementById("addPointModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+<style>
+.stat-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+/* Modal Arka Planı */
+.modal-overlay {
+    display: none; /* Varsayılan olarak gizli */
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.5); /* Siyah yarı saydam arka plan */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal İçeriği (Kutu) */
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+</style>
+
+{% endblock %}

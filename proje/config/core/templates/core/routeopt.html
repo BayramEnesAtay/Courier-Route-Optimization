@@ -1,0 +1,135 @@
+{% extends 'core/base.html' %} 
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
+<style>
+    .route-container { display: flex; height: 80vh; gap: 20px; margin-top: 20px; }
+    .sidebar { width: 300px; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+    #map { flex-grow: 1; height: 100%; border-radius: 8px; z-index: 1; }
+    input[type="text"] { padding: 8px; width: 90%; margin-bottom: 10px; }
+    button { padding: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 5px; }
+    .btn-add { background-color: #28a745; color: white; }
+    .btn-optimize { background-color: #007bff; color: white; margin-top: auto; }
+    .btn-clear { background-color: #dc3545; color: white; }
+    #points-list li { background: white; border-bottom: 1px solid #eee; padding: 10px; display: flex; justify-content: space-between; }
+</style>
+
+<h2>Algorithmic Route Optimization</h2>
+
+<div class="route-container">
+    <div class="sidebar">
+        <h3>Add Delivery Point</h3>
+        <input type="text" id="pointName" placeholder="Name (e.g. Home)">
+        <input type="text" id="pointAddress" placeholder="Address (e.g. Konya)">
+        <button class="btn-add" onclick="addPoint()">➕ Add Point</button>
+
+        <h4>Unsorted Points</h4>
+        <ul id="points-list"></ul>
+
+        <button class="btn-optimize" onclick="sendToAlgorithm()">🚀 Run My Algorithm</button>
+        <button class="btn-clear" onclick="clearMap()">🗑️ Clear</button>
+    </div>
+    <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+<script>
+    var map = L.map('map').setView([37.8716, 32.4851], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
+
+    var rawPoints = []; // Sırasız ham veriler (Python'a gidecek)
+    var markers = [];
+    var routingControl = null;
+
+    async function addPoint() {
+        var name = document.getElementById('pointName').value;
+        var address = document.getElementById('pointAddress').value;
+        if (!address) return alert("Address required!");
+
+        // Geocoding
+        var url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data.length > 0) {
+                var lat = parseFloat(data[0].lat);
+                var lon = parseFloat(data[0].lon);
+
+                // Listeye ekle (Henüz rota yok)
+                var pointObj = { name: name, lat: lat, lng: lon };
+                rawPoints.push(pointObj);
+
+                var marker = L.marker([lat, lon]).addTo(map).bindPopup(name).openPopup();
+                markers.push(marker);
+
+                // HTML Listesine ekle
+                document.getElementById('points-list').innerHTML += `<li>${name}</li>`;
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    // --- KRİTİK KISIM: PYTHON İLE HABERLEŞME ---
+    async function sendToAlgorithm() {
+        if (rawPoints.length < 2) return alert("Need at least 2 points!");
+
+        // 1. Python Backend'e Verileri Gönder
+        const response = await fetch('/core/api/calculate_route/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ points: rawPoints })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // 2. Python'dan gelen SIRALANMIŞ listeyi al
+            const sortedPoints = result.sorted_points;
+            
+            console.log("Python'dan gelen sıralama:", sortedPoints);
+            drawRoute(sortedPoints);
+        }
+    }
+
+    function drawRoute(sortedData) {
+        if (routingControl) map.removeControl(routingControl);
+
+        // Veriyi Leaflet formatına çevir
+        var waypoints = sortedData.map(p => L.latLng(p.lat, p.lng));
+
+        // 3. Haritaya Çizdir
+        // ÖNEMLİ: router seçeneğini siliyoruz veya varsayılan bırakıyoruz.
+        // Leaflet Routing Machine varsayılan olarak verdiğimiz sırayı takip eder.
+        // OSRM sadece A->B->C arasındaki virajları hesaplar, C->B->A yapmaz.
+        
+        routingControl = L.Routing.control({
+            waypoints: waypoints,
+            routeWhileDragging: false,
+            addWaypoints: false,      // Kullanıcı elle değiştiremesin
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            lineOptions: { styles: [{color: 'blue', weight: 6}] },
+            createMarker: function(i, wp) {
+                // Markerların üzerine sıra numarası yazalım (1, 2, 3...)
+                return L.marker(wp.latLng, {
+                    icon: L.divIcon({
+                        className: 'leaflet-mouse-marker',
+                        html: `<div style="background:red; color:white; border-radius:50%; width:20px; height:20px; text-align:center;">${i+1}</div>`
+                    })
+                });
+            }
+        }).addTo(map);
+    }
+
+    function clearMap() {
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+        rawPoints = [];
+        document.getElementById('points-list').innerHTML = "";
+        if (routingControl) map.removeControl(routingControl);
+    }
+</script>
+{% endblock %}
